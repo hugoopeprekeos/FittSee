@@ -14,8 +14,12 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 try:
-    from dotenv import load_dotenv
-    load_dotenv(BASE_DIR / ".env")
+    from dotenv import load_dotenv, find_dotenv
+    dotenv_path = find_dotenv(usecwd=True)
+    if dotenv_path:
+        load_dotenv(dotenv_path)
+    else:
+        load_dotenv(BASE_DIR / ".env")
 except Exception:
     pass
 

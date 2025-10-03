@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: fittsee-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fittsee
+    ports:
+      - "5432:5432"
+    volumes:
+      - fittsee_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d fittsee"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  fittsee_pg:
